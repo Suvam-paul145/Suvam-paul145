@@ -79,9 +79,7 @@
 
 ---
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=Suvam-paul145&color=blue&style=flat-square&label=Profile+Views&label=Profile+Views&style=for-the-badge&label=Profile+Views&color=brightgreen&label=Profile+Views&count=1001" alt="Profile Views" />
-</p>
+![Profile Views](https://komarev.com/ghpvc/?username=Suvam-paul145&color=blue&style=flat-square&label=Profile+Views&custom=1000+)
 
 <div align="center">
   <b>Thanks for visiting my profile! Feel free to star ⭐ some repositories if you find them interesting!</b>
