@@ -56,19 +56,6 @@
 
 ---
 
-## 🌟 Featured Projects
-
-<p align="center">
-  <a href="https://github.com/Suvam-paul145/Mental-health-consultant">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Suvam-paul145&repo=Mental-health-consultant&theme=radical" />
-  </a>
-  <a href="https://github.com/Suvam-paul145/iHack_demo">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Suvam-paul145&repo=iHack_demo&theme=radical" />
-  </a>
-</p>
-
----
-
 ## 🤝 Connect with Me
 
 <p align="center">
