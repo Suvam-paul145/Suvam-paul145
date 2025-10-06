@@ -41,7 +41,7 @@
 
 ## 📊 GitHub Stats & Visualizations
 
-<p align="center">
+<!-- <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Suvam-paul145&show_icons=true&theme=radical" alt="GitHub Stats"/>
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=Suvam-paul145&theme=radical" alt="GitHub Streak"/>
 </p>
@@ -52,7 +52,10 @@
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=compact&theme=radical" alt="Top Languages"/>
-</p>
+</p> -->
+![](https://github-readme-stats.vercel.app/api?username=Rohit-Dnath&theme=dark&hide_border=false&include_all_commits=true&count_private=true)<br/>
+![](https://nirzak-streak-stats.vercel.app/?user=Rohit-Dnath&theme=dark&hide_border=false)<br/>
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=Rohit-Dnath&theme=dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
 
 ---
 
