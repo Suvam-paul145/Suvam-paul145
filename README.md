@@ -39,8 +39,6 @@
 
 ---
 
-## 📊 GitHub Stats & Visualizations
-
 ## 📊 GitHub Visuals & Analytics
 
 <p align="center">
