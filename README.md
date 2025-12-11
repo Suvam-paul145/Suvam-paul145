@@ -41,19 +41,27 @@
 
 ## 📊 GitHub Stats & Visualizations
 
+## 📊 GitHub Visuals & Analytics
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=150&section=header&text=Welcome!&fontSize=40&fontAlignY=30" />
+</p>
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Suvam-paul145&show_icons=true&theme=radical" alt="GitHub Stats"/>
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=Suvam-paul145&theme=radical" alt="GitHub Streak"/>
 </p>
-
+<p align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=Suvam-paul145&theme=darkhub&row=1&column=6" />
+</p>
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=Suvam-paul145&theme=react-dark" alt="Contribution Graph"/>
 </p>
-
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=compact&theme=radical" alt="Top Languages"/>
-</p> 
-
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&hide=html,css&layout=compact&theme=radical" alt="Top Languages"/>
+</p>
+<p align="center">
+  <img src="https://github.com/Suvam-paul145/Suvam-paul145/blob/output/github-contribution-grid-snake.svg" />
+</p>
 
 ---
 
