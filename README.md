@@ -52,15 +52,6 @@ I'm a versatile **Full-Stack Developer** and **ML Enthusiast** passionate about 
 
 ## GitHub Statistics & Visuals
 
-### GitHub Stats  
-[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Suvam-paul145&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
-
-### Contribution Streak  
-[![GitHub Streak Stats](https://streak-stats.demolab.com?user=Suvam-paul145&theme=tokyonight&hide_border=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
-
-### GitHub Trophies  
-[![GitHub Trophies](https://github-profile-trophy.vercel.app/?username=Suvam-paul145&theme=tokyonight&no-frame=true&margin-w=5)](https://github.com/Suvam-paul145)
-
 ### Top Languages  
 [![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=compact&theme=tokyonight&hide_border=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
 
