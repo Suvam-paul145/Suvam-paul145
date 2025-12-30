@@ -53,10 +53,10 @@ I'm a versatile **Full-Stack Developer** and **ML Enthusiast** passionate about 
 ## GitHub Statistics & Visuals
 
 ### Top Languages  
-[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=compact&theme=tokyonight&hide_border=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
+[![](https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=compact&theme=tokyonight&hide_border=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
 
 ### Most Used Languages (Pie Chart)  
-[![Top Langs Pie](https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=pie&theme=tokyonight&hide_border=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
+[![](https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=pie&theme=tokyonight&hide_border=true&cache_seconds=86400)](https://github.com/Suvam-paul145)
 
 ---
 
