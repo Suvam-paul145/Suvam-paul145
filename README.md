@@ -141,6 +141,4 @@ I'm a versatile **Full-Stack Developer** and **ML Enthusiast** passionate about 
 
 ### Thanks for visiting my profile!  
 
-**Let's build something amazing together!**  
-
-**Made with ❤️ by Suvam Paul**  
+**Let's build something amazing together!**   
