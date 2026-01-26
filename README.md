@@ -1,7 +1,9 @@
-# Hi there! I'm Suvam Paul  
+<div align="center" style="margin: 5px;" >
+    I am Suvam
+</div>
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=35&pause=1000&color=00D4FF&center=true&vCenter=true&width=700&height=70&lines=Welcome+to+my+GitHub+Profile!;Passionate+Software+Developer+;AI+%26+ML+Enthusiast+;Full-Stack+Web+Developer+" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=35&pause=1000&color=00D4FF&center=true&vCenter=true&width=700&height=70&lines=Welcome+to+my+GitHub+Profile!;Passionate+AI+Backend+Developer+;AI+%26+ML+Enthusiast+;Full-Stack+AI+Developer+" alt="Typing SVG" />
 </div>
 
 ---
