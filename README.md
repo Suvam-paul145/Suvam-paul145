@@ -65,12 +65,12 @@ Multi-agent system with voice control, app management, and intelligent task exec
 </td>
 <td width="50%">
 
-### 🏥 [Medical Document Extraction](https://github.com/Suvam-paul145/medical-document-extraction-using-AI)
-**Intelligent Medical Data Gateway**
+### 🏥 [Medical Document Extraction](https://github.com/Suvam-paul145/Medical-Doccument-Extraction)   
+**Prescription and Medical Document Analyser**
 
-Production-ready system for extracting and processing medical documents with AI.
+MediParse provides context-aware insights, translating complex medical jargon into plain English for patients and identifying potential drug interactions for healthcare providers.
 
-`React` `Express` `OpenAI` `TypeScript` `Socket.io`
+`Typescript` `Gemini` `REST-api` `Vercel`
 
 </td>
 </tr>
