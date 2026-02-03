@@ -26,6 +26,71 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 
 ---
 
+## 🛠️ My Favorite Tools
+
+<details open>
+<summary><h3>💻 Core Languages</h3></summary>
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=js,ts,c,python,cpp,java,html,css&theme=dark" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/search?q=user%3ASuvam-paul145+language%3Ajavascript"><img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black"></a>
+  <a href="https://github.com/search?q=user%3ASuvam-paul145+language%3Atypescript"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"></a>
+  <a href="https://github.com/search?q=user%3ASuvam-paul145+language%3Apython"><img alt="Python" src="https://img.shields.io/badge/Python-3776AB.svg?style=for-the-badge&logo=python&logoColor=white"></a>
+</p>
+</details>
+
+<details open>
+<summary><h3>⚡ Frameworks & Libraries</h3></summary>
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,express,tailwind,fastapi,flask&theme=dark" />
+</p>
+
+| Frontend | Backend | AI/Data |
+|:--------:|:-------:|:-------:|
+| ![React](https://img.shields.io/badge/React-20232a?style=flat-square&logo=react&logoColor=%2361DAFB) | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) | ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white) |
+| ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white) | ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white) | ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white) |
+| ![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) | ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white) |
+| ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white) | ![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white) | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white) |
+
+</details>
+
+<details open>
+<summary><h3>🗄️ Databases & Cloud</h3></summary>
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=aws,gcp,firebase,mongodb,docker,vercel,github&theme=dark" />
+</p>
+
+```
+📊 Databases          ☁️ Cloud & DevOps        🔧 Tools
+├── MongoDB           ├── Docker               ├── Git
+├── MySQL             ├── Vercel               ├── VS Code
+├── SQLite            ├── Railway              ├── Postman
+└── AWS S3            └── GitHub Actions       └── Figma
+```
+
+</details>
+
+<details>
+<summary><h3>🎯 Currently Leveling Up</h3></summary>
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=aws,kubernetes,redis,graphql&theme=dark" />
+</p>
+
+- 🌩️ **AWS** - EC2, Lambda, S3
+- 🐳 **Docker & Kubernetes** - Container Orchestration
+- 🔴 **Redis** - Caching & Session Management
+- 📡 **GraphQL** - API Design
+
+</details>
+
+---
+
 ## 🚀 Current Goals
 
 🔹 Mastering **MERN Stack + Next.js + TypeScript**  
@@ -97,71 +162,6 @@ Full-featured productivity app with modern UI and real-time updates.
 </td>
 </tr>
 </table>
-
----
-
-## 🛠️ My Favorite Tools
-
-<details open>
-<summary><h3>💻 Core Languages</h3></summary>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=js,ts,c,python,cpp,java,html,css&theme=dark" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/search?q=user%3ASuvam-paul145+language%3Ajavascript"><img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black"></a>
-  <a href="https://github.com/search?q=user%3ASuvam-paul145+language%3Atypescript"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"></a>
-  <a href="https://github.com/search?q=user%3ASuvam-paul145+language%3Apython"><img alt="Python" src="https://img.shields.io/badge/Python-3776AB.svg?style=for-the-badge&logo=python&logoColor=white"></a>
-</p>
-</details>
-
-<details open>
-<summary><h3>⚡ Frameworks & Libraries</h3></summary>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,express,tailwind,fastapi,flask&theme=dark" />
-</p>
-
-| Frontend | Backend | AI/Data |
-|:--------:|:-------:|:-------:|
-| ![React](https://img.shields.io/badge/React-20232a?style=flat-square&logo=react&logoColor=%2361DAFB) | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) | ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white) |
-| ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white) | ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white) | ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white) |
-| ![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) | ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white) |
-| ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white) | ![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white) | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white) |
-
-</details>
-
-<details open>
-<summary><h3>🗄️ Databases & Cloud</h3></summary>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=aws,gcp,firebase,mongodb,docker,vercel,github&theme=dark" />
-</p>
-
-```
-📊 Databases          ☁️ Cloud & DevOps        🔧 Tools
-├── MongoDB           ├── Docker               ├── Git
-├── MySQL             ├── Vercel               ├── VS Code
-├── SQLite            ├── Railway              ├── Postman
-└── AWS S3            └── GitHub Actions       └── Figma
-```
-
-</details>
-
-<details>
-<summary><h3>🎯 Currently Leveling Up</h3></summary>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=aws,kubernetes,redis,graphql&theme=dark" />
-</p>
-
-- 🌩️ **AWS** - EC2, Lambda, S3
-- 🐳 **Docker & Kubernetes** - Container Orchestration
-- 🔴 **Redis** - Caching & Session Management
-- 📡 **GraphQL** - API Design
-
-</details>
 
 ---
 
