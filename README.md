@@ -120,44 +120,45 @@ const suvam = {
 <tr>
 <td width="50%">
 
-### 🤖 [Dev-AI-OS-Assistant](https://github.com/Suvam-paul145/Dev-AI-OS-assistant)
-**AI-Powered Desktop Automation**
+### 🎨 [Portfolio](https://github.com/Suvam-paul145/portfolio)
+**Personal Developer Portfolio Website**
 
-Multi-agent system with voice control, app management, and intelligent task execution.
+Modern developer portfolio showcasing projects, skills, and achievements with a clean UI and responsive design.
 
-`Python` `FastAPI` `React` `TypeScript` `WebSockets`
+`React` `TypeScript` `Tailwind CSS` `Vite`
 
 </td>
+<td width="50%">
+
+### 🩺 [SwasthaLink](https://github.com/Suvam-paul145/SwasthaLink)
+**Digital Healthcare Connectivity Platform**
+
+A healthcare platform enabling seamless interaction between patients and providers with a focus on accessibility and digital health records.
+
+`Next.js` `TypeScript` `Node.js` `MongoDB` `REST API`
+
+</td>
+</tr>
+
+<tr>
 <td width="50%">
 
 ### 🏥 [Medical Document Extraction](https://github.com/Suvam-paul145/Medical-Doccument-Extraction)   
 **Prescription and Medical Document Analyser**
 
-MediParse provides context-aware insights, translating complex medical jargon into plain English for patients and identifying potential drug interactions for healthcare providers.
+AI-powered system that extracts, interprets, and simplifies medical documents, delivering actionable insights and detecting drug interactions.
 
-`Typescript` `Gemini` `REST-api` `Vercel`
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-### 🌐 [NAMASTE-ICD-11 Dual Code System](https://github.com/Suvam-paul145/NAMASTE-ICD-11_DUAL_CODE_SYSTEM)
-**FHIR-Compliant Health Terminology**
-
-Bridges AYUSH diagnoses with ICD-11 for interoperable patient records.
-
-`NestJS` `Transformers` `React` `MongoDB` `FHIR R4`
+`TypeScript` `Gemini` `REST API` `Vercel`
 
 </td>
 <td width="50%">
 
-### ✅ [KaryaSetu](https://github.com/Suvam-paul145/KaryaSetu)
-**Task Management System**
+### 🕹️ [Retro-Revival](https://github.com/Suvam-paul145/Retro-revival)
+**Classic Gaming Experience Reimagined**
 
-Full-featured productivity app with modern UI and real-time updates.
+A nostalgic web-based gaming project reviving retro-style gameplay with modern web technologies and smooth UI interactions.
 
-`TypeScript` `React` `Tailwind CSS` `Node.js`
+`JavaScript` `HTML` `CSS` `Canvas API`
 
 </td>
 </tr>
@@ -167,10 +168,7 @@ Full-featured productivity app with modern UI and real-time updates.
 
 ## 📊 GitHub Analytics
 
-<div align="center">
-  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=Suvam-paul145&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117" />
-  <img width="40%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Suvam-paul145&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117" />
-</div>
+![Stats Card 3](https://awesome-github-stats.azurewebsites.net/user-stats/Suvam-paul145?theme=dracula&cardType=level-alternate)
 
 ---
 
@@ -187,7 +185,6 @@ Full-featured productivity app with modern UI and real-time updates.
 <div align="center">
 
 ![Contribution Graph](https://ssr-contributions-svg.vercel.app/_/Suvam-paul145?chart=3dbar&gap=0.6&scale=2&gradient=true&flatten=0&animation=mess&animation_duration=6&animation_loop=true&format=svg&weeks=50&theme=purple&widget_size=large&colors=FF6F61,FF9671,FFC15E,72F2EB,1282A2,FCE2DB,FAD4D8,DBDFFD&dark=true)
-
 </div>
 
 ---
