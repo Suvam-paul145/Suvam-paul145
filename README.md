@@ -143,12 +143,11 @@ A healthcare platform enabling seamless interaction between patients and provide
 <tr>
 <td width="50%">
 
-### 🏥 [Medical Document Extraction](https://github.com/Suvam-paul145/Medical-Doccument-Extraction)   
-**Prescription and Medical Document Analyser**
+### 🏥 [Proplytics: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/Proplytics)   
+****
 
-AI-powered system that extracts, interprets, and simplifies medical documents, delivering actionable insights and detecting drug interactions.
-
-`TypeScript` `Gemini` `REST API` `Vercel`
+AI-powered client brief → structured proposal generator · Streaming JSON · Confidence Grid · Built for agencies and freelancers. Task job scheduler and Email Automations.
+`javascript` `dockerfile` `html5` `mongodb` `reactjs` `aws-s3` `node-js` `express-js` `aws-cloudfront` `aws-amplify` `tailwind-css` `aws-ecs-fargate`
 
 </td>
 <td width="50%">
