@@ -130,7 +130,7 @@ Modern developer portfolio showcasing projects, skills, and achievements with a 
 </td>
 <td width="50%">
 
-### 🩺 [SwasthaLink](https://github.com/Suvam-paul145/SwasthaLink)
+### 🩺 [SwasthaLink: AI Enabled Smart Hospital](https://github.com/Suvam-paul145/SwasthaLink)
 **Digital Healthcare Connectivity Platform**
 
 A healthcare platform enabling seamless interaction between patients and providers with a focus on accessibility and digital health records.
