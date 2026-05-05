@@ -143,7 +143,7 @@ A healthcare platform enabling seamless interaction between patients and provide
 <tr>
 <td width="50%">
 
-### 🏥 [Proplytics: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/Proplytics)   
+### 🏥 [FixFlowAI: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/FixFlowAI)   
 ****
 
 AI-powered client brief → structured proposal generator · Streaming JSON · Confidence Grid · Built for agencies and freelancers. Task job scheduler and Email Automations.
