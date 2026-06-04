@@ -47,6 +47,10 @@ LANGUAGE_ICONS = {
 }
 
 
+class StatsUnavailable(RuntimeError):
+    pass
+
+
 def request_json(url, data=None):
     headers = {
         "Accept": "application/vnd.github+json",
@@ -94,6 +98,19 @@ def write_svg(path, width, height, content, label):
     path.write_text(svg, encoding="utf-8")
 
 
+def download_svg(url, path):
+    req = urllib.request.Request(url, headers={"User-Agent": "profile-readme-card-renderer"})
+    with urllib.request.urlopen(req, timeout=30) as response:
+        body = response.read()
+    if b"<svg" not in body[:500]:
+        raise StatsUnavailable(f"{url} did not return SVG content")
+    path.write_bytes(body)
+
+
+def has_svg(path):
+    return path.exists() and "<svg" in path.read_text(encoding="utf-8", errors="ignore")
+
+
 def fallback_public_repos():
     repos = []
     page = 1
@@ -109,6 +126,8 @@ def fallback_public_repos():
 
 
 def fetch_contribution_stats():
+    if not TOKEN:
+        raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for contribution stats")
     query = """
     query($login: String!) {
       user(login: $login) {
@@ -253,6 +272,8 @@ def language_icon(name, color, x, y):
 
 
 def render_top_languages(languages):
+    if not languages:
+        raise StatsUnavailable("No language data available")
     top = sorted(languages.items(), key=lambda item: item[1]["size"], reverse=True)[:6]
     total = sum(item["size"] for _, item in top) or 1
     rows = []
@@ -270,16 +291,17 @@ def render_top_languages(languages):
         )
         y += 29
 
-    empty = f'<text x="24" y="95" fill="{TEXT}" font-family="{FONT}" font-size="14">Language data will appear after the workflow runs.</text>'
     content = f"""
   <text x="24" y="34" fill="{TITLE}" font-family="{FONT}" font-size="19" font-weight="700">Top Languages</text>
   <text x="24" y="53" fill="{MUTED}" font-family="{FONT}" font-size="12">Calculated from accessible repositories</text>
-  {''.join(rows) if rows else empty}
+  {''.join(rows)}
 """
     write_svg(OUT_DIR / "top-langs.svg", 450, 250, content, "Suvam Paul's top programming languages")
 
 
 def fetch_streak_stats():
+    if not TOKEN:
+        raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for streak stats")
     query = """
     query($login: String!) {
       user(login: $login) {
@@ -322,10 +344,7 @@ def fetch_streak_stats():
 
 
 def render_streak():
-    try:
-        stats = fetch_streak_stats()
-    except Exception:
-        stats = {"current": "Run workflow", "longest": "Run workflow", "total": "Run workflow"}
+    stats = fetch_streak_stats()
 
     content = f"""
   <text x="28" y="42" fill="{TITLE}" font-family="{FONT}" font-size="21" font-weight="700">Contribution Streak</text>
@@ -344,24 +363,36 @@ def render_streak():
 
 
 def main():
+    stats_path = OUT_DIR / "stats.svg"
+    languages_path = OUT_DIR / "top-langs.svg"
+    streak_path = OUT_DIR / "streak.svg"
+
     try:
         contribution_stats = fetch_contribution_stats()
-    except Exception:
-        contribution_stats = {
-            "totalContributions": "--",
-            "pullRequests": "--",
-            "contributedProjects": "--",
-            "codeReviews": "--",
-        }
+        render_stats(contribution_stats)
+    except Exception as exc:
+        if not has_svg(stats_path):
+            raise StatsUnavailable(f"Cannot generate {stats_path}: {exc}") from exc
 
     try:
         languages = fetch_languages_from_graphql()
     except Exception:
         languages = fetch_languages_from_rest()
+    try:
+        render_top_languages(languages)
+    except Exception as exc:
+        if not has_svg(languages_path):
+            raise StatsUnavailable(f"Cannot generate {languages_path}: {exc}") from exc
 
-    render_stats(contribution_stats)
-    render_top_languages(languages)
-    render_streak()
+    try:
+        render_streak()
+    except Exception as exc:
+        try:
+            url = f"https://streak-stats.demolab.com?user={OWNER}&theme=github-dark-blue&hide_border=true"
+            download_svg(url, streak_path)
+        except Exception:
+            if not has_svg(streak_path):
+                raise StatsUnavailable(f"Cannot generate {streak_path}: {exc}") from exc
 
 
 if __name__ == "__main__":
