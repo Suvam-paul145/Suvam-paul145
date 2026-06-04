@@ -165,6 +165,19 @@ A nostalgic web-based gaming project reviving retro-style gameplay with modern w
 
 ---
 
+### 📊 GitHub Stats
+
+![Stats](./profile/stats.svg)  
+![Top Langs](./profile/top-langs.svg)  
+
+---
+
+### 🔥 Contribution Streak
+
+![Streak](./profile/streak.svg)
+
+---
+
 ## 📊 GitHub Analytics
 
 ![Stats Card 3](https://awesome-github-stats.azurewebsites.net/user-stats/Suvam-paul145?theme=dracula&cardType=level-alternate)
