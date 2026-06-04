@@ -43,7 +43,7 @@ jobs:
         uses: Pranesh-2005/github-readme-stats-fast-action@v1.2
         with:
           card: wakatime
-          options: username=praneshjs
+          options: username=${{ github.repository_owner }}
           path: profile/wakatime.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,4 +55,4 @@ jobs:
 
           git add profile/*.svg
           git commit -m "Update README cards" || echo "No changes to commit"
-          git push origin HEAD
+          git push origin HEAD:${{ github.ref_name }}
