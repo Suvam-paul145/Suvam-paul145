@@ -1,6 +1,8 @@
 name: Update README cards
 
 on:
+  push:
+    branches: [ "main" ]
   schedule:
     - cron: "0 * * * *"
   workflow_dispatch:
@@ -15,38 +17,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate stats card
-        uses: Suvam-paul145/github-readme-stats-fast-action@v1.2
-        with:
-          card: stats
-          options: username=${{ github.repository_owner }}&show_icons=true&theme=radical
-          path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Generate streak card
-        uses: Pranesh-2005/github-readme-stats-fast-action@v1.2
-        with:
-          card: streak
-          options: username=${{ github.repository_owner }}&show_icons=true&theme=radical
-          path: profile/streak.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Generate Top Languages card
-        uses: Suvam-paul145/github-readme-stats-fast-action@v1.2
-        with:
-          card: top-langs
-          options: username=${{ github.repository_owner }}&layout=compact&theme=radical
-          path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Generate Wakatime card
-        uses: Suvam-paul145/github-readme-stats-fast-action@v1.2
-        with:
-          card: wakatime
-          options: username=${{ github.repository_owner }}
-          path: profile/wakatime.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Generate README cards
+        env:
+          # Optional PAT with read access to private repos; falls back to GITHUB_TOKEN for public data.
+          README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: python .github/scripts/render_readme_cards.py
 
       - name: Commit cards
         run: |

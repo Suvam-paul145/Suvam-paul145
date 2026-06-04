@@ -1,0 +1,17 @@
+<svg width="520" height="196" viewBox="0 0 520 196" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Suvam Paul&#x27;s contribution streak">
+  <rect width="520" height="196" rx="14" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="519" height="195" rx="13.5" fill="#111827" stroke="#243244"/>
+  
+  <text x="28" y="42" fill="#e5eef8" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Contribution Streak</text>
+  <text x="28" y="67" fill="#8b9aab" font-family="Segoe UI, Arial, sans-serif" font-size="12">Current year contribution rhythm</text>
+  <rect x="28" y="88" width="144" height="78" rx="12" fill="#0f172a" stroke="#263449"/>
+  <rect x="188" y="88" width="144" height="78" rx="12" fill="#0f172a" stroke="#263449"/>
+  <rect x="348" y="88" width="144" height="78" rx="12" fill="#0f172a" stroke="#263449"/>
+  <text x="100" y="122" fill="#38bdf8" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="800" text-anchor="middle">Run workflow</text>
+  <text x="260" y="122" fill="#22c55e" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="800" text-anchor="middle">Run workflow</text>
+  <text x="420" y="122" fill="#a78bfa" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="800" text-anchor="middle">Run workflow</text>
+  <text x="100" y="147" fill="#b9c7d6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Current</text>
+  <text x="260" y="147" fill="#b9c7d6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Longest</text>
+  <text x="420" y="147" fill="#b9c7d6" font-family="Segoe UI, Arial, sans-serif" font-size="12" text-anchor="middle">Total</text>
+
+</svg>
