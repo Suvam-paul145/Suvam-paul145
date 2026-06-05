@@ -12,6 +12,9 @@ TOKEN = os.environ.get("README_STATS_TOKEN") or os.environ.get("GITHUB_TOKEN", "
 OUT_DIR = Path("profile")
 OUT_DIR.mkdir(exist_ok=True)
 
+import sys
+import re
+
 BG = "#0d1117"
 CARD = "#111827"
 BORDER = "#243244"
@@ -109,6 +112,65 @@ def download_svg(url, path):
 
 def has_svg(path):
     return path.exists() and "<svg" in path.read_text(encoding="utf-8", errors="ignore")
+
+
+def update_stats_svg_file(path, stats):
+    """Update numeric values in an existing stats.svg in-place, preserving structure.
+
+    Returns True if any replacement was made.
+    """
+    try:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return False
+
+    mapping = [
+        ("Total Contributions", stats["totalContributions"]),
+        ("Pull Requests", stats["pullRequests"]),
+        ("Contributed Projects", stats["contributedProjects"]),
+        ("Code Reviews", stats["codeReviews"]),
+    ]
+    changed = False
+    for label, value in mapping:
+        new_value = esc(fmt(value))
+        pattern = re.compile(rf'({re.escape(label)}</text>\s*<text[^>]*>)([^<]*)(</text>)', re.DOTALL)
+        new_text, n = pattern.subn(lambda m: m.group(1) + new_value + m.group(3), text, count=1)
+        if n:
+            text = new_text
+            changed = True
+
+    if changed:
+        path.write_text(text, encoding="utf-8")
+    return changed
+
+
+def update_streak_svg_file(path, stats):
+    """Update numeric values in an existing streak.svg in-place, preserving structure.
+
+    Stats dict expected keys: 'current', 'longest', 'total'
+    Returns True if any replacement was made.
+    """
+    try:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return False
+
+    replacements = [
+        (r'<!-- Total Contributions big number -->.*?<text[^>]*>([\s\d,]+)</text>', str(stats.get('total', ''))),
+        (r'<!-- Current Streak big number -->.*?<text[^>]*>([\s\d,]+)</text>', str(stats.get('current', ''))),
+        (r'<!-- Longest Streak big number -->.*?<text[^>]*>([\s\d,]+)</text>', str(stats.get('longest', ''))),
+    ]
+    changed = False
+    for pattern, new_value in replacements:
+        new_value = esc(fmt(new_value))
+        new_text, n = re.subn(pattern, lambda m: m.group(0).replace(m.group(1), new_value, 1), text, count=1, flags=re.DOTALL)
+        if n:
+            text = new_text
+            changed = True
+
+    if changed:
+        path.write_text(text, encoding="utf-8")
+    return changed
 
 
 def fallback_public_repos():
@@ -367,32 +429,63 @@ def main():
     languages_path = OUT_DIR / "top-langs.svg"
     streak_path = OUT_DIR / "streak.svg"
 
+    # Print which token is being used (present/absent only) to help debug CI runs
+    try:
+        token_source = 'README_STATS_TOKEN' if os.environ.get('README_STATS_TOKEN') else ('GITHUB_TOKEN' if os.environ.get('GITHUB_TOKEN') else 'none')
+        print(f"Token source: {token_source}")
+    except Exception:
+        pass
+
     try:
         contribution_stats = fetch_contribution_stats()
-        render_stats(contribution_stats)
+        # If an existing stats.svg is present, attempt to update only the numeric values
+        # to preserve the SVG structure/UI. Fall back to full render if updating fails.
+        if stats_path.exists() and has_svg(stats_path):
+            updated = update_stats_svg_file(stats_path, contribution_stats)
+            if not updated:
+                render_stats(contribution_stats)
+        else:
+            render_stats(contribution_stats)
     except Exception as exc:
+        # Log the error to aid debugging in workflow logs, but don't print secret values
+        print(f"Could not fetch contribution stats: {exc}", file=sys.stderr)
+        # Preserve the existing stats.svg if present; only fail if nothing exists to show
         if not has_svg(stats_path):
             raise StatsUnavailable(f"Cannot generate {stats_path}: {exc}") from exc
 
-    try:
-        languages = fetch_languages_from_graphql()
-    except Exception:
-        languages = fetch_languages_from_rest()
-    try:
-        render_top_languages(languages)
-    except Exception as exc:
-        if not has_svg(languages_path):
-            raise StatsUnavailable(f"Cannot generate {languages_path}: {exc}") from exc
-
-    try:
-        render_streak()
-    except Exception as exc:
+    # Skip regenerating top-langs.svg by default to avoid changing its structure/UI.
+    # To enable generation, set environment variable GENERATE_TOP_LANGS=1 in the workflow.
+    if os.environ.get("GENERATE_TOP_LANGS") == "1":
         try:
-            url = f"https://streak-stats.demolab.com?user={OWNER}&theme=github-dark-blue&hide_border=true"
-            download_svg(url, streak_path)
+            languages = fetch_languages_from_graphql()
         except Exception:
-            if not has_svg(streak_path):
-                raise StatsUnavailable(f"Cannot generate {streak_path}: {exc}") from exc
+            languages = fetch_languages_from_rest()
+        try:
+            render_top_languages(languages)
+        except Exception as exc:
+            print(f"Could not render top languages: {exc}", file=sys.stderr)
+            if not has_svg(languages_path):
+                raise StatsUnavailable(f"Cannot generate {languages_path}: {exc}") from exc
+
+    # Optionally generate streak.svg if explicitly requested (keeps file stable by default)
+    if os.environ.get("GENERATE_STREAK") == "1":
+        try:
+            # Prefer updating existing streak.svg in-place (change numbers only) to preserve UI
+            streak_stats = fetch_streak_stats()
+            if streak_path.exists() and has_svg(streak_path):
+                updated = update_streak_svg_file(streak_path, streak_stats)
+                if not updated:
+                    render_streak()
+            else:
+                render_streak()
+        except Exception as exc:
+            try:
+                url = f"https://streak-stats.demolab.com?user={OWNER}&theme=github-dark-blue&hide_border=true"
+                download_svg(url, streak_path)
+            except Exception:
+                print(f"Could not render streak: {exc}", file=sys.stderr)
+                if not has_svg(streak_path):
+                    raise StatsUnavailable(f"Cannot generate {streak_path}: {exc}") from exc
 
 
 if __name__ == "__main__":
