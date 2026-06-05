@@ -58,14 +58,6 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
   <img src="https://skillicons.dev/icons?i=aws,gcp,firebase,mongodb,docker,vercel,github&theme=dark" />
 </p>
 
-```
-📊 Databases          ☁️ Cloud & DevOps        🔧 Tools
-├── MongoDB           ├── Docker               ├── Git
-├── MySQL             ├── Vercel               ├── VS Code
-├── SQLite            ├── Railway              ├── Postman
-└── AWS S3            └── GitHub Actions       └── Figma
-```
-
 </details>
 
 <details>
