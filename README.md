@@ -1,4 +1,4 @@
-# 👋 Hey, I'm Suvam Paul  
+# Hey, I'm Suvam Paul  
 
 <div align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=34&pause=1000&color=00F7FF&center=true&vCenter=true&width=750&lines=AI+Backend+Engineer+in+Progress;MERN+Stack+Developer;Cloud+%2B+AI+Integration+Builder;Turning+Ideas+into+Scalable+Systems" />
@@ -10,15 +10,15 @@
 
 ---
 
-## 🧠 Who Am I?
+## Who Am I?
 
 <img align="right" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="300"/>
 
 I'm not just a web developer — I'm building myself into an **AI-powered Backend Full Stack Engineer**.
 
-💡 I love building **systems**, not just pages.  
-⚙️ My focus is on **backend architecture, authentication systems, AI integration, and scalable cloud deployment**.  
-🔬 Currently crafting intelligent applications that bridge **AI automation** with real-world workflows.
+I love building **systems**, not just pages.  
+My focus is on **backend architecture, authentication systems, AI integration, and scalable cloud deployment**.  
+Currently crafting intelligent applications that bridge **AI automation** with real-world workflows.
 
 > *"Frontend shows it. Backend runs it. AI makes it intelligent."*
 
@@ -34,7 +34,7 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 </div>
 
 ---
-## 🛠️ My Favorite Tools
+## My Favorite Tools
 
 <details open>
 <summary><h3>Core Languages</h3></summary>
@@ -85,7 +85,7 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 
 ---
 
-## 🚀 Current Goals
+## Current Goals
 
 🔹 Mastering **MERN Stack + Next.js + TypeScript**  
 🔹 Building **secure authentication systems (JWT, OAuth, Roles)**  
