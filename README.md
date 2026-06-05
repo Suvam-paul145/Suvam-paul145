@@ -26,10 +26,18 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 
 ---
 
+### GitHub Stats
+
+<div align="center">
+  <img alt="Suvam Paul's GitHub stats" src="./profile/stats.svg" width="49%" />
+  <img alt="Suvam Paul's top languages" src="./profile/top-langs.svg" width="49%" />
+</div>
+
+---
 ## 🛠️ My Favorite Tools
 
 <details open>
-<summary><h3>💻 Core Languages</h3></summary>
+<summary><h3>Core Languages</h3></summary>
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=js,ts,c,python,cpp,java,html,css&theme=dark" />
@@ -43,7 +51,7 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 </details>
 
 <details open>
-<summary><h3>⚡ Frameworks & Libraries</h3></summary>
+<summary><h3>Frameworks & Libraries</h3></summary>
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,express,tailwind,fastapi,flask&theme=dark" />
@@ -52,7 +60,7 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 </details>
 
 <details open>
-<summary><h3>🗄️ Databases & Cloud</h3></summary>
+<summary><h3>Databases & Cloud</h3></summary>
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=aws,gcp,firebase,mongodb,docker,vercel,github&theme=dark" />
@@ -60,17 +68,18 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 
 </details>
 
-<details>
-<summary><h3>🎯 Currently Leveling Up</h3></summary>
+<details open>
+<summary><h3>Currently Leveling Up</h3></summary>
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=aws,kubernetes,redis,graphql&theme=dark" />
 </p>
+</details>
 
-- 🌩️ **AWS** - EC2, Lambda, S3
-- 🐳 **Docker & Kubernetes** - Container Orchestration
-- 🔴 **Redis** - Caching & Session Management
-- 📡 **GraphQL** - API Design
+- **AWS** - EC2, Lambda, S3
+- **Docker & Kubernetes** - Container Orchestration
+- **Redis** - Caching & Session Management
+- **GraphQL** - API Design
 
 </details>
 
@@ -86,26 +95,15 @@ I'm not just a web developer — I'm building myself into an **AI-powered Backen
 
 ---
 
-## 🚀 Current Mission
-
-```javascript
-const suvam = {
-    learning: ["MERN Stack", "Next.js", "TypeScript", "AWS", "Docker", "GenAI"],
-    building: ["AI-Powered OS Assistants", "Medical AI Systems", "Healthcare Integrations"],
-    exploring: ["LangChain", "Vector Databases", "Microservices Architecture"],
-    goal: "Production-Level AI-Integrated Full Stack Systems"
-};
-```
-
 ---
 
-## 🏗️ Featured Projects
+## Featured Projects
 
 <table>
 <tr>
 <td width="50%">
 
-### 🎨 [Portfolio](https://github.com/Suvam-paul145/portfolio)
+### [Portfolio](https://github.com/Suvam-paul145/portfolio)
 **Personal Developer Portfolio Website**
 
 Modern developer portfolio showcasing projects, skills, and achievements with a clean UI and responsive design.
@@ -115,7 +113,7 @@ Modern developer portfolio showcasing projects, skills, and achievements with a 
 </td>
 <td width="50%">
 
-### 🩺 [SwasthaLink: AI Enabled Smart Hospital](https://github.com/Suvam-paul145/SwasthaLink)
+### [SwasthaLink: AI Enabled Smart Hospital](https://github.com/Suvam-paul145/SwasthaLink)
 **Digital Healthcare Connectivity Platform**
 
 A healthcare platform enabling seamless interaction between patients and providers with a focus on accessibility and digital health records.
@@ -128,7 +126,7 @@ A healthcare platform enabling seamless interaction between patients and provide
 <tr>
 <td width="50%">
 
-### 🏥 [FixFlowAI: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/FixFlowAI)   
+### [FixFlowAI: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/FixFlowAI)   
 ****
 
 AI-powered client brief → structured proposal generator · Streaming JSON · Confidence Grid · Built for agencies and freelancers. Task job scheduler and Email Automations.
@@ -137,7 +135,7 @@ AI-powered client brief → structured proposal generator · Streaming JSON · C
 </td>
 <td width="50%">
 
-### 🕹️ [Retro-Revival](https://github.com/Suvam-paul145/Retro-revival)
+### [Retro-Revival](https://github.com/Suvam-paul145/Retro-revival)
 **Classic Gaming Experience Reimagined**
 
 A nostalgic web-based gaming project reviving retro-style gameplay with modern web technologies and smooth UI interactions.
@@ -150,16 +148,7 @@ A nostalgic web-based gaming project reviving retro-style gameplay with modern w
 
 ---
 
-### 📊 GitHub Stats
-
-<div align="center">
-  <img alt="Suvam Paul's GitHub stats" src="./profile/stats.svg" width="49%" />
-  <img alt="Suvam Paul's top languages" src="./profile/top-langs.svg" width="49%" />
-</div>
-
----
-
-### 🔥 Contribution Streak
+### Contribution Streak
 
 <div align="center">
   <img alt="Suvam Paul's GitHub contribution streak" src="./profile/streak.svg" width="98%" />
@@ -167,7 +156,7 @@ A nostalgic web-based gaming project reviving retro-style gameplay with modern w
 
 ---
 
-## 📈 Activity Graph
+## Activity Graph
 
 <a href="https://github.com/Suvam-paul145">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=Suvam-paul145&theme=tokyo-night&hide_border=true&bg_color=0D1117" width="100%">
@@ -175,7 +164,7 @@ A nostalgic web-based gaming project reviving retro-style gameplay with modern w
 
 ---
 
-## 🎯 Contribution        
+## Contribution        
 
 <div align="center">
 
@@ -184,7 +173,7 @@ A nostalgic web-based gaming project reviving retro-style gameplay with modern w
 
 ---
 
-## 🤝 Let's Connect
+## Let's Connect
 
 <div align="center">
   
