@@ -76,7 +76,7 @@
 
                 <!-- Current Streak big number -->
                 <g transform='translate(247.1, 48)'>
-                    <text x='4' y='42' stroke-width='4' text-anchor='middle' fill='#FEFEFE' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='741' font-size='28px' font-style='normal' style='animation: currstreak 0.0s linear forwards'>0</text>
+                    <text x='4' y='42' stroke-width='4' text-anchor='middle' fill='#FEFEFE' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='741' font-size='28px' font-style='normal' style='animation: currstreak 1.0s linear forwards'>0</text>
                 </g>
 
             </g>
