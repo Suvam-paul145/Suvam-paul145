@@ -8,12 +8,33 @@ from pathlib import Path
 
 
 OWNER = os.environ.get("GITHUB_REPOSITORY_OWNER", "Suvam-paul145")
-TOKEN = os.environ.get("README_STATS_TOKEN") or os.environ.get("GITHUB_TOKEN", "")
 OUT_DIR = Path("profile")
 OUT_DIR.mkdir(exist_ok=True)
 
 import sys
 import re
+
+def get_valid_token():
+    for name in ["README_STATS_TOKEN", "GITHUB_TOKEN"]:
+        token = os.environ.get(name)
+        if token:
+            req = urllib.request.Request(
+                f"https://api.github.com/users/{OWNER}",
+                headers={
+                    "Accept": "application/vnd.github+json",
+                    "User-Agent": "profile-readme-card-renderer",
+                    "Authorization": f"Bearer {token}"
+                }
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    if response.status == 200:
+                        return token
+            except Exception as exc:
+                print(f"Token from {name} is invalid or expired: {exc}", file=sys.stderr)
+    return ""
+
+TOKEN = get_valid_token()
 
 BG = "#0d1117"
 CARD = "#111827"

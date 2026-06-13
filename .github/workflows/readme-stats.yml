@@ -23,6 +23,7 @@ jobs:
         # Enable top languages and streak generation so the cards follow fetched data.
         env:
           README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           GENERATE_TOP_LANGS: "1"
           GENERATE_STREAK: "1"
@@ -31,6 +32,7 @@ jobs:
       - name: Debug token presence
         env:
           README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "README_STATS_TOKEN: ${README_STATS_TOKEN:+present}"
           echo "GITHUB_TOKEN: ${GITHUB_TOKEN:+present}"
