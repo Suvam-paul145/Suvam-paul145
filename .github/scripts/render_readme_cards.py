@@ -156,14 +156,14 @@ def update_streak_svg_file(path, stats):
         return False
 
     replacements = [
-        (r'<!-- Total Contributions big number -->.*?<text[^>]*>([\s\d,]+)</text>', str(stats.get('total', ''))),
-        (r'<!-- Current Streak big number -->.*?<text[^>]*>([\s\d,]+)</text>', str(stats.get('current', ''))),
-        (r'<!-- Longest Streak big number -->.*?<text[^>]*>([\s\d,]+)</text>', str(stats.get('longest', ''))),
+        (r'(<!-- Total Contributions big number -->.*?<text[^>]*>)([^<]*)(</text>)', str(stats.get('total', ''))),
+        (r'(<!-- Current Streak big number -->.*?<text[^>]*>)([^<]*)(</text>)', str(stats.get('current', ''))),
+        (r'(<!-- Longest Streak big number -->.*?<text[^>]*>)([^<]*)(</text>)', str(stats.get('longest', ''))),
     ]
     changed = False
     for pattern, new_value in replacements:
         new_value = esc(fmt(new_value))
-        new_text, n = re.subn(pattern, lambda m: m.group(0).replace(m.group(1), new_value, 1), text, count=1, flags=re.DOTALL)
+        new_text, n = re.subn(pattern, lambda m: m.group(1) + new_value + m.group(3), text, count=1, flags=re.DOTALL)
         if n:
             text = new_text
             changed = True
