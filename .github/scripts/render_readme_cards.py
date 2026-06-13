@@ -211,10 +211,23 @@ def fallback_public_repos():
 def fetch_contribution_stats():
     if not TOKEN:
         raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for contribution stats")
-    query = """
+    
+    # Get user creation date to determine the range of years
+    query_created = """
     query($login: String!) {
       user(login: $login) {
-        contributionsCollection {
+        createdAt
+      }
+    }
+    """
+    created_at_str = graphql(query_created, {"login": OWNER})["user"]["createdAt"]
+    start_year = date.fromisoformat(created_at_str.split("T")[0]).year
+    end_year = date.today().year
+
+    query_year = """
+    query($login: String!, $from: DateTime!, $to: DateTime!) {
+      user(login: $login) {
+        contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
             totalContributions
           }
@@ -236,22 +249,39 @@ def fetch_contribution_stats():
       }
     }
     """
-    collection = graphql(query, {"login": OWNER})["user"]["contributionsCollection"]
+    
+    total_contributions = 0
+    total_prs = 0
+    total_reviews = 0
     projects = set()
-    for group in (
-        "commitContributionsByRepository",
-        "pullRequestContributionsByRepository",
-        "pullRequestReviewContributionsByRepository",
-        "issueContributionsByRepository",
-    ):
-        for item in collection.get(group, []):
-            projects.add(item["repository"]["nameWithOwner"])
+    
+    for year in range(start_year, end_year + 1):
+        from_date = f"{year}-01-01T00:00:00Z"
+        to_date = f"{year}-12-31T23:59:59Z"
+        try:
+            collection = graphql(query_year, {"login": OWNER, "from": from_date, "to": to_date})["user"]["contributionsCollection"]
+            
+            total_contributions += collection["contributionCalendar"]["totalContributions"]
+            total_prs += collection["totalPullRequestContributions"]
+            total_reviews += collection["totalPullRequestReviewContributions"]
+            
+            for group in (
+                "commitContributionsByRepository",
+                "pullRequestContributionsByRepository",
+                "pullRequestReviewContributionsByRepository",
+                "issueContributionsByRepository",
+            ):
+                for item in collection.get(group, []):
+                    if item.get("repository"):
+                        projects.add(item["repository"]["nameWithOwner"])
+        except Exception as exc:
+            print(f"Error fetching contribution stats for year {year}: {exc}", file=sys.stderr)
 
     return {
-        "totalContributions": collection["contributionCalendar"]["totalContributions"],
-        "pullRequests": collection["totalPullRequestContributions"],
+        "totalContributions": total_contributions,
+        "pullRequests": total_prs,
         "contributedProjects": len(projects),
-        "codeReviews": collection["totalPullRequestReviewContributions"],
+        "codeReviews": total_reviews,
     }
 
 
@@ -385,10 +415,23 @@ def render_top_languages(languages):
 def fetch_streak_stats():
     if not TOKEN:
         raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for streak stats")
-    query = """
+    
+    # Get user creation date to determine start year
+    query_created = """
     query($login: String!) {
       user(login: $login) {
-        contributionsCollection {
+        createdAt
+      }
+    }
+    """
+    created_at_str = graphql(query_created, {"login": OWNER})["user"]["createdAt"]
+    start_year = date.fromisoformat(created_at_str.split("T")[0]).year
+    end_year = date.today().year
+
+    query_year = """
+    query($login: String!, $from: DateTime!, $to: DateTime!) {
+      user(login: $login) {
+        contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
             totalContributions
             weeks {
@@ -402,27 +445,57 @@ def fetch_streak_stats():
       }
     }
     """
-    calendar = graphql(query, {"login": OWNER})["user"]["contributionsCollection"]["contributionCalendar"]
+    
+    all_days = []
+    total_contributions = 0
+    
+    for year in range(start_year, end_year + 1):
+        from_date = f"{year}-01-01T00:00:00Z"
+        to_date = f"{year}-12-31T23:59:59Z"
+        try:
+            calendar = graphql(query_year, {"login": OWNER, "from": from_date, "to": to_date})["user"]["contributionsCollection"]["contributionCalendar"]
+            total_contributions += calendar["totalContributions"]
+            for week in calendar["weeks"]:
+                for day in week["contributionDays"]:
+                    all_days.append(day)
+        except Exception as exc:
+            print(f"Error fetching streak calendar for year {year}: {exc}", file=sys.stderr)
+
+    # Sort days by date to ensure chronological order
+    all_days.sort(key=lambda d: d["date"])
+    
+    # Filter out future days
     days = [
         day
-        for week in calendar["weeks"]
-        for day in week["contributionDays"]
+        for day in all_days
         if date.fromisoformat(day["date"]) <= date.today()
     ]
+    
     current = 0
     for day in reversed(days):
         if day["contributionCount"] == 0:
+            # If the current day is not finished, or it is today and they haven't committed yet, 
+            # they might have committed yesterday, so don't break yet if we're on today's index
+            # and they have a streak from yesterday.
+            # However, standard streak calculation says if today is 0, we can check if yesterday is > 0.
+            # Let's check: if we are at the very last element (today) and it is 0, we check if they committed yesterday.
+            # If they did not commit today, but they committed yesterday, the streak is still active (it doesn't break).
+            if len(days) - 1 - days.index(day) == 0:
+                # This is today, and it's 0. Let's see if yesterday has contributions.
+                continue
             break
         current += 1
+        
     longest = 0
     running = 0
     for day in days:
         running = running + 1 if day["contributionCount"] else 0
         longest = max(longest, running)
+        
     return {
         "current": current,
         "longest": longest,
-        "total": calendar["totalContributions"],
+        "total": total_contributions,
     }
 
 
