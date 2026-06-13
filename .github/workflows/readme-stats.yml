@@ -48,4 +48,5 @@ jobs:
           if [ -f profile/streak.svg ]; then git add profile/streak.svg; fi
 
           git commit -m "Update README cards" || echo "No changes to commit"
+          git pull origin ${{ github.ref_name }} --rebase
           git push origin HEAD:${{ github.ref_name }}
