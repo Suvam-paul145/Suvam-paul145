@@ -1,7 +1,7 @@
 # Hey, I'm Suvam Paul  
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=34&pause=1000&color=00F7FF&center=true&vCenter=true&width=750&lines=AI+Backend+Engineer+in+Progress;MERN+Stack+Developer;Cloud+%2B+AI+Integration+Builder;Turning+Ideas+into+Scalable+Systems" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=34&pause=1000&color=00F7FF&center=true&vCenter=true&width=750&lines=AI+Backend+Engineer+in+Progress;Backend+Developer;Cloud+%2B+AI+Integration+Builder;Turning+Ideas+into+Scalable+Systems" />
 </div>
 
 <div align="center">
