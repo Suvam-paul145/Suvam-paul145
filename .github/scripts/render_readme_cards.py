@@ -1,18 +1,48 @@
 import html
 import json
+import math
 import os
+import re
+import sys
 import urllib.error
 import urllib.request
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
+
+
+def load_dotenv(dotenv_path=Path(".env")):
+    """Load variables from .env file into os.environ if present."""
+    if not dotenv_path.exists():
+        return
+    try:
+        for line in dotenv_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" in line:
+                key, val = line.split("=", 1)
+                key = key.strip()
+                val = val.strip().strip("'\"")
+                if key and key not in os.environ:
+                    os.environ[key] = val
+    except Exception:
+        pass
+
+
+load_dotenv()
+
+
+def is_enabled(name, default="1"):
+    val = os.environ.get(name)
+    if val is None or val == "":
+        val = default
+    return str(val).strip().lower() in ("1", "true", "yes", "on", "enable", "enabled")
 
 
 OWNER = os.environ.get("GITHUB_REPOSITORY_OWNER", "Suvam-paul145")
 OUT_DIR = Path("profile")
 OUT_DIR.mkdir(exist_ok=True)
 
-import sys
-import re
 
 def get_valid_token():
     for name in ["README_STATS_TOKEN", "GITHUB_TOKEN"]:
@@ -34,6 +64,7 @@ def get_valid_token():
                 print(f"Token from {name} is invalid or expired: {exc}", file=sys.stderr)
     return ""
 
+
 TOKEN = get_valid_token()
 
 BG = "#0d1117"
@@ -45,6 +76,7 @@ MUTED = "#8b9aab"
 ACCENT = "#38bdf8"
 GREEN = "#22c55e"
 PURPLE = "#a78bfa"
+GRID = "#1f2937"
 
 FONT = "Segoe UI, Arial, sans-serif"
 
@@ -119,6 +151,12 @@ def write_svg(path, width, height, content, label):
   {content}
 </svg>
 """
+    if path.exists():
+        try:
+            if path.read_text(encoding="utf-8").strip() == svg.strip():
+                return
+        except Exception:
+            pass
     path.write_text(svg, encoding="utf-8")
 
 
@@ -136,10 +174,6 @@ def has_svg(path):
 
 
 def update_stats_svg_file(path, stats):
-    """Update numeric values in an existing stats.svg in-place, preserving structure.
-
-    Returns True if any replacement was made.
-    """
     try:
         text = path.read_text(encoding="utf-8", errors="ignore")
     except Exception:
@@ -156,35 +190,6 @@ def update_stats_svg_file(path, stats):
         new_value = esc(fmt(value))
         pattern = re.compile(rf'({re.escape(label)}</text>\s*<text[^>]*>)([^<]*)(</text>)', re.DOTALL)
         new_text, n = pattern.subn(lambda m: m.group(1) + new_value + m.group(3), text, count=1)
-        if n:
-            text = new_text
-            changed = True
-
-    if changed:
-        path.write_text(text, encoding="utf-8")
-    return changed
-
-
-def update_streak_svg_file(path, stats):
-    """Update numeric values in an existing streak.svg in-place, preserving structure.
-
-    Stats dict expected keys: 'current', 'longest', 'total'
-    Returns True if any replacement was made.
-    """
-    try:
-        text = path.read_text(encoding="utf-8", errors="ignore")
-    except Exception:
-        return False
-
-    replacements = [
-        (r'(<!-- Total Contributions big number -->.*?<text[^>]*>)([^<]*)(</text>)', str(stats.get('total', ''))),
-        (r'(<!-- Current Streak big number -->.*?<text[^>]*>)([^<]*)(</text>)', str(stats.get('current', ''))),
-        (r'(<!-- Longest Streak big number -->.*?<text[^>]*>)([^<]*)(</text>)', str(stats.get('longest', ''))),
-    ]
-    changed = False
-    for pattern, new_value in replacements:
-        new_value = esc(fmt(new_value))
-        new_text, n = re.subn(pattern, lambda m: m.group(1) + new_value + m.group(3), text, count=1, flags=re.DOTALL)
         if n:
             text = new_text
             changed = True
@@ -212,7 +217,6 @@ def fetch_contribution_stats():
     if not TOKEN:
         raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for contribution stats")
     
-    # Get user creation date to determine the range of years
     query_created = """
     query($login: String!) {
       user(login: $login) {
@@ -412,59 +416,100 @@ def render_top_languages(languages):
     write_svg(OUT_DIR / "top-langs.svg", 450, 250, content, "Suvam Paul's top programming languages")
 
 
-def fetch_streak_stats():
-    if not TOKEN:
-        raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for streak stats")
-    
-    # Get user creation date to determine start year
-    query_created = """
-    query($login: String!) {
-      user(login: $login) {
-        createdAt
-      }
-    }
-    """
-    created_at_str = graphql(query_created, {"login": OWNER})["user"]["createdAt"]
-    start_year = date.fromisoformat(created_at_str.split("T")[0]).year
-    end_year = date.today().year
+def fetch_public_contributions():
+    req = urllib.request.Request(
+        f"https://github.com/users/{OWNER}/contributions",
+        headers={"User-Agent": "profile-readme-card-renderer"}
+    )
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        html_content = resp.read().decode("utf-8")
 
-    query_year = """
-    query($login: String!, $from: DateTime!, $to: DateTime!) {
-      user(login: $login) {
-        contributionsCollection(from: $from, to: $to) {
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                date
-                contributionCount
-              }
-            }
-          }
-        }
-      }
-    }
-    """
-    
+    tooltip_map = {}
+    for match in re.finditer(r'<tool-tip[^>]*for="([^"]+)"[^>]*>(.*?)</tool-tip>', html_content, re.DOTALL):
+        comp_id, text = match.group(1), match.group(2)
+        m = re.search(r'(\d+)\s+contribution', text)
+        count = int(m.group(1)) if m else 0
+        tooltip_map[comp_id] = count
+
+    days_data = []
+    for match in re.finditer(r'<td[^>]*data-date="([^"]+)"[^>]*id="(contribution-day-component-[^"]+)"', html_content):
+        date_str, comp_id = match.group(1), match.group(2)
+        count = tooltip_map.get(comp_id, 0)
+        days_data.append({"date": date_str, "contributionCount": count})
+
+    days_data.sort(key=lambda x: x["date"])
+    return days_data
+
+
+def fetch_streak_stats():
     all_days = []
     total_contributions = 0
     
-    for year in range(start_year, end_year + 1):
-        from_date = f"{year}-01-01T00:00:00Z"
-        to_date = f"{year}-12-31T23:59:59Z"
+    if TOKEN:
+        query_created = """
+        query($login: String!) {
+          user(login: $login) {
+            createdAt
+          }
+        }
+        """
         try:
-            calendar = graphql(query_year, {"login": OWNER, "from": from_date, "to": to_date})["user"]["contributionsCollection"]["contributionCalendar"]
-            total_contributions += calendar["totalContributions"]
-            for week in calendar["weeks"]:
-                for day in week["contributionDays"]:
-                    all_days.append(day)
-        except Exception as exc:
-            print(f"Error fetching streak calendar for year {year}: {exc}", file=sys.stderr)
+            created_at_str = graphql(query_created, {"login": OWNER})["user"]["createdAt"]
+            start_year = date.fromisoformat(created_at_str.split("T")[0]).year
+            end_year = date.today().year
 
-    # Sort days by date to ensure chronological order
+            query_year = """
+            query($login: String!, $from: DateTime!, $to: DateTime!) {
+              user(login: $login) {
+                contributionsCollection(from: $from, to: $to) {
+                  contributionCalendar {
+                    totalContributions
+                    weeks {
+                      contributionDays {
+                        date
+                        contributionCount
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            """
+            for year in range(start_year, end_year + 1):
+                from_date = f"{year}-01-01T00:00:00Z"
+                to_date = f"{year}-12-31T23:59:59Z"
+                try:
+                    calendar = graphql(query_year, {"login": OWNER, "from": from_date, "to": to_date})["user"]["contributionsCollection"]["contributionCalendar"]
+                    total_contributions += calendar["totalContributions"]
+                    for week in calendar["weeks"]:
+                        for day in week["contributionDays"]:
+                            all_days.append(day)
+                except Exception as exc:
+                    print(f"Error fetching streak calendar for year {year}: {exc}", file=sys.stderr)
+        except Exception as exc:
+            print(f"GraphQL streak fetch failed, trying public calendar: {exc}", file=sys.stderr)
+
+    if not all_days:
+        try:
+            all_days = fetch_public_contributions()
+            total_contributions = sum(d["contributionCount"] for d in all_days)
+            # When running without token, preserve all-time total from existing SVG if present
+            stats_svg = OUT_DIR / "stats.svg"
+            if stats_svg.exists():
+                try:
+                    s_text = stats_svg.read_text(encoding="utf-8")
+                    m = re.search(r'Total Contributions</text>\s*<text[^>]*>([^<]+)</text>', s_text)
+                    if m:
+                        total_contributions = m.group(1)
+                except Exception:
+                    pass
+        except Exception as exc:
+            if not TOKEN:
+                raise StatsUnavailable("GITHUB_TOKEN or README_STATS_TOKEN is required for streak stats") from exc
+            raise
+
     all_days.sort(key=lambda d: d["date"])
     
-    # Filter out future days
     days = [
         day
         for day in all_days
@@ -472,16 +517,9 @@ def fetch_streak_stats():
     ]
     
     current = 0
-    for day in reversed(days):
+    for idx, day in enumerate(reversed(days)):
         if day["contributionCount"] == 0:
-            # If the current day is not finished, or it is today and they haven't committed yet, 
-            # they might have committed yesterday, so don't break yet if we're on today's index
-            # and they have a streak from yesterday.
-            # However, standard streak calculation says if today is 0, we can check if yesterday is > 0.
-            # Let's check: if we are at the very last element (today) and it is 0, we check if they committed yesterday.
-            # If they did not commit today, but they committed yesterday, the streak is still active (it doesn't break).
-            if len(days) - 1 - days.index(day) == 0:
-                # This is today, and it's 0. Let's see if yesterday has contributions.
+            if idx == 0:
                 continue
             break
         current += 1
@@ -496,11 +534,13 @@ def fetch_streak_stats():
         "current": current,
         "longest": longest,
         "total": total_contributions,
+        "days": days,
     }
 
 
-def render_streak():
-    stats = fetch_streak_stats()
+def render_streak(stats=None):
+    if stats is None:
+        stats = fetch_streak_stats()
 
     content = f"""
   <text x="28" y="42" fill="{TITLE}" font-family="{FONT}" font-size="21" font-weight="700">Contribution Streak</text>
@@ -518,12 +558,175 @@ def render_streak():
     write_svg(OUT_DIR / "streak.svg", 520, 196, content, "Suvam Paul's contribution streak")
 
 
+def render_activity_graph(days, width=840, height=280):
+    if not days:
+        raise StatsUnavailable("No contribution day data available for activity graph")
+
+    total_contribs = sum(d["contributionCount"] for d in days)
+    active_days = sum(1 for d in days if d["contributionCount"] > 0)
+    max_day = max((d["contributionCount"] for d in days), default=0)
+
+    reversed_days = list(reversed(days))
+    weekly_chunks = []
+    for i in range(0, min(52 * 7, len(reversed_days)), 7):
+        chunk = reversed_days[i:i + 7]
+        weekly_chunks.append(chunk)
+    weekly_chunks.reverse()
+
+    weeks = []
+    for chunk in weekly_chunks:
+        start_date = min(d["date"] for d in chunk)
+        total = sum(d["contributionCount"] for d in chunk)
+        weeks.append((start_date, total))
+
+    if not weeks:
+        return
+
+    counts = [w[1] for w in weeks]
+    max_val = max(counts) if counts else 1
+    if max_val == 0:
+        max_val = 1
+    ceil_max = math.ceil(max_val / 10) * 10 or 10
+
+    pad_left = 50
+    pad_right = 35
+    pad_top = 88
+    pad_bottom = 45
+    plot_width = width - pad_left - pad_right
+    plot_height = height - pad_top - pad_bottom
+
+    n = len(weeks)
+    step_x = plot_width / max(1, n - 1)
+
+    points = []
+    for i, (date_str, val) in enumerate(weeks):
+        x = pad_left + i * step_x
+        y = pad_top + plot_height - (val / ceil_max) * plot_height
+        points.append((x, y, val, date_str))
+
+    def get_spline_path(pts):
+        if len(pts) < 2:
+            return ""
+        path = [f"M {pts[0][0]:.1f},{pts[0][1]:.1f}"]
+        for i in range(len(pts) - 1):
+            p0 = pts[i - 1] if i > 0 else pts[i]
+            p1 = pts[i]
+            p2 = pts[i + 1]
+            p3 = pts[i + 2] if i + 2 < len(pts) else p2
+
+            cp1x = p1[0] + (p2[0] - p0[0]) / 6.0
+            cp1y = p1[1] + (p2[1] - p0[1]) / 6.0
+            cp2x = p2[0] - (p3[0] - p1[0]) / 6.0
+            cp2y = p2[1] - (p3[1] - p1[1]) / 6.0
+
+            cp1y = min(cp1y, pad_top + plot_height)
+            cp2y = min(cp2y, pad_top + plot_height)
+
+            path.append(f"C {cp1x:.1f},{cp1y:.1f} {cp2x:.1f},{cp2y:.1f} {p2[0]:.1f},{p2[1]:.1f}")
+        return " ".join(path)
+
+    line_d = get_spline_path(points)
+    first_x = points[0][0]
+    last_x = points[-1][0]
+    base_y = pad_top + plot_height
+    area_d = f"{line_d} L {last_x:.1f},{base_y:.1f} L {first_x:.1f},{base_y:.1f} Z"
+
+    grid_svg = []
+    for frac in [0.0, 0.33, 0.66, 1.0]:
+        y_val = pad_top + plot_height - frac * plot_height
+        label_val = int(round(frac * ceil_max))
+        grid_svg.append(
+            f'<line x1="{pad_left}" y1="{y_val:.1f}" x2="{width - pad_right}" y2="{y_val:.1f}" stroke="{GRID}" stroke-width="1" stroke-dasharray="3 3"/>'
+            f'<text x="{pad_left - 10}" y="{y_val + 4:.1f}" fill="{MUTED}" font-family="{FONT}" font-size="10" text-anchor="end">{label_val}</text>'
+        )
+
+    month_svg = []
+    last_month = None
+    for x, y, val, date_str in points:
+        try:
+            dt = datetime.strptime(date_str, "%Y-%m-%d")
+            m_str = dt.strftime("%b")
+            if m_str != last_month:
+                month_svg.append(
+                    f'<text x="{x:.1f}" y="{base_y + 22}" fill="{MUTED}" font-family="{FONT}" font-size="11" text-anchor="middle">{m_str}</text>'
+                )
+                last_month = m_str
+        except Exception:
+            pass
+
+    peak_points_svg = []
+    max_week_val = max(counts)
+    for x, y, val, date_str in points:
+        if val == max_week_val and val > 0:
+            peak_points_svg.append(
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{ACCENT}" opacity="0.3"/>'
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3.5" fill="#ffffff" stroke="{ACCENT}" stroke-width="2"/>'
+                f'<text x="{x:.1f}" y="{y - 10:.1f}" fill="{TITLE}" font-family="{FONT}" font-size="11" font-weight="700" text-anchor="middle">{val}</text>'
+            )
+
+    total_str = f"{total_contribs:,}"
+    pills_svg = f"""
+    <!-- Total Pill -->
+    <rect x="{width - 340}" y="26" width="98" height="34" rx="8" fill="#0f172a" stroke="{BORDER}"/>
+    <circle cx="{width - 326}" cy="43" r="4" fill="{ACCENT}"/>
+    <text x="{width - 314}" y="38" fill="{MUTED}" font-family="{FONT}" font-size="9">TOTAL</text>
+    <text x="{width - 314}" y="52" fill="{TITLE}" font-family="{FONT}" font-size="13" font-weight="700">{total_str}</text>
+
+    <!-- Peak Day Pill -->
+    <rect x="{width - 232}" y="26" width="98" height="34" rx="8" fill="#0f172a" stroke="{BORDER}"/>
+    <circle cx="{width - 218}" cy="43" r="4" fill="{GREEN}"/>
+    <text x="{width - 206}" y="38" fill="{MUTED}" font-family="{FONT}" font-size="9">MAX DAY</text>
+    <text x="{width - 206}" y="52" fill="{TITLE}" font-family="{FONT}" font-size="13" font-weight="700">{max_day} commits</text>
+
+    <!-- Active Days Pill -->
+    <rect x="{width - 124}" y="26" width="94" height="34" rx="8" fill="#0f172a" stroke="{BORDER}"/>
+    <circle cx="{width - 110}" cy="43" r="4" fill="{PURPLE}"/>
+    <text x="{width - 98}" y="38" fill="{MUTED}" font-family="{FONT}" font-size="9">ACTIVE</text>
+    <text x="{width - 98}" y="52" fill="{TITLE}" font-family="{FONT}" font-size="13" font-weight="700">{active_days} days</text>
+    """
+
+    content = f"""
+  <defs>
+    <linearGradient id="act-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="{ACCENT}" stop-opacity="0.32"/>
+      <stop offset="70%" stop-color="{ACCENT}" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="{ACCENT}" stop-opacity="0.0"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <text x="28" y="42" fill="{TITLE}" font-family="{FONT}" font-size="20" font-weight="700">Activity Graph</text>
+  <text x="28" y="62" fill="{MUTED}" font-family="{FONT}" font-size="12">Weekly contribution cadence &amp; rhythm across past 52 weeks</text>
+
+  {pills_svg}
+
+  <!-- Gridlines -->
+  {''.join(grid_svg)}
+
+  <!-- Area Fill -->
+  <path d="{area_d}" fill="url(#act-grad)"/>
+
+  <!-- Glowing Line -->
+  <path d="{line_d}" stroke="{ACCENT}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+
+  <!-- Peaks -->
+  {''.join(peak_points_svg)}
+
+  <!-- Month labels -->
+  {''.join(month_svg)}
+"""
+    write_svg(OUT_DIR / "activity-graph.svg", width, height, content, "Suvam Paul's contribution activity graph")
+
+
 def main():
     stats_path = OUT_DIR / "stats.svg"
     languages_path = OUT_DIR / "top-langs.svg"
     streak_path = OUT_DIR / "streak.svg"
+    activity_path = OUT_DIR / "activity-graph.svg"
 
-    # Print which token is being used (present/absent only) to help debug CI runs
     try:
         token_source = 'README_STATS_TOKEN' if os.environ.get('README_STATS_TOKEN') else ('GITHUB_TOKEN' if os.environ.get('GITHUB_TOKEN') else 'none')
         print(f"Token source: {token_source}")
@@ -532,8 +735,6 @@ def main():
 
     try:
         contribution_stats = fetch_contribution_stats()
-        # If an existing stats.svg is present, attempt to update only the numeric values
-        # to preserve the SVG structure/UI. Fall back to full render if updating fails.
         if stats_path.exists() and has_svg(stats_path):
             updated = update_stats_svg_file(stats_path, contribution_stats)
             if not updated:
@@ -541,15 +742,11 @@ def main():
         else:
             render_stats(contribution_stats)
     except Exception as exc:
-        # Log the error to aid debugging in workflow logs, but don't print secret values
         print(f"Could not fetch contribution stats: {exc}", file=sys.stderr)
-        # Preserve the existing stats.svg if present; only fail if nothing exists to show
         if not has_svg(stats_path):
             raise StatsUnavailable(f"Cannot generate {stats_path}: {exc}") from exc
 
-    # Skip regenerating top-langs.svg by default to avoid changing its structure/UI.
-    # To enable generation, set environment variable GENERATE_TOP_LANGS=1 in the workflow.
-    if os.environ.get("GENERATE_TOP_LANGS") == "1":
+    if is_enabled("GENERATE_TOP_LANGS"):
         try:
             languages = fetch_languages_from_graphql()
         except Exception:
@@ -561,25 +758,25 @@ def main():
             if not has_svg(languages_path):
                 raise StatsUnavailable(f"Cannot generate {languages_path}: {exc}") from exc
 
-    # Optionally generate streak.svg if explicitly requested (keeps file stable by default)
-    if os.environ.get("GENERATE_STREAK") == "1":
+    streak_stats = None
+    if is_enabled("GENERATE_STREAK") or is_enabled("GENERATE_ACTIVITY_GRAPH"):
         try:
-            # Prefer updating existing streak.svg in-place (change numbers only) to preserve UI
             streak_stats = fetch_streak_stats()
-            if streak_path.exists() and has_svg(streak_path):
-                updated = update_streak_svg_file(streak_path, streak_stats)
-                if not updated:
-                    render_streak()
-            else:
-                render_streak()
+            if is_enabled("GENERATE_STREAK"):
+                render_streak(streak_stats)
         except Exception as exc:
-            try:
-                url = f"https://streak-stats.demolab.com?user={OWNER}&theme=github-dark-blue&hide_border=true"
-                download_svg(url, streak_path)
-            except Exception:
-                print(f"Could not render streak: {exc}", file=sys.stderr)
-                if not has_svg(streak_path):
-                    raise StatsUnavailable(f"Cannot generate {streak_path}: {exc}") from exc
+            print(f"Could not render streak: {exc}", file=sys.stderr)
+            if not has_svg(streak_path):
+                raise StatsUnavailable(f"Cannot generate {streak_path}: {exc}") from exc
+
+    if is_enabled("GENERATE_ACTIVITY_GRAPH"):
+        try:
+            days = streak_stats["days"] if streak_stats and "days" in streak_stats else fetch_public_contributions()
+            render_activity_graph(days)
+        except Exception as exc:
+            print(f"Could not render activity graph: {exc}", file=sys.stderr)
+            if not has_svg(activity_path):
+                raise StatsUnavailable(f"Cannot generate {activity_path}: {exc}") from exc
 
 
 if __name__ == "__main__":

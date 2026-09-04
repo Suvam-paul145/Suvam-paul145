@@ -126,7 +126,7 @@ A healthcare platform enabling seamless interaction between patients and provide
 <tr>
 <td width="50%">
 
-### [FixFlowAI: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/FixFlowAI)   
+### [FixFlowAI: Build for Freelancer and Agencies](https://github.com/Suvam-paul145/fixflow-ai-research-agent)   
 ****
 
 AI-powered client brief → structured proposal generator · Streaming JSON · Confidence Grid · Built for agencies and freelancers. Task job scheduler and Email Automations.
@@ -158,9 +158,9 @@ A nostalgic web-based gaming project reviving retro-style gameplay with modern w
 
 ## Activity Graph
 
-<a href="https://github.com/Suvam-paul145">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=Suvam-paul145&theme=tokyo-night&hide_border=true&bg_color=0D1117" width="100%">
-</a>
+<div align="center">
+  <img alt="Suvam Paul's Activity Graph" src="./profile/activity-graph.svg" width="100%" />
+</div>
 
 ---
 

@@ -17,25 +17,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env from secrets
+        env:
+          README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+          GENERATE_TOP_LANGS: ${{ secrets.GENERATE_TOP_LANGS || '1' }}
+          GENERATE_STREAK: ${{ secrets.GENERATE_STREAK || '1' }}
+          GENERATE_ACTIVITY_GRAPH: ${{ secrets.GENERATE_ACTIVITY_GRAPH || '1' }}
+        run: |
+          echo "README_STATS_TOKEN=${README_STATS_TOKEN}" >> .env
+          echo "GENERATE_TOP_LANGS=${GENERATE_TOP_LANGS}" >> .env
+          echo "GENERATE_STREAK=${GENERATE_STREAK}" >> .env
+          echo "GENERATE_ACTIVITY_GRAPH=${GENERATE_ACTIVITY_GRAPH}" >> .env
+
       - name: Generate README cards
-        # Provide only the optional personal token explicitly; the runner already sets GITHUB_TOKEN
-        # so avoid overwriting it with an empty secret value. Also expose the repository owner.
-        # Enable top languages and streak generation so the cards follow fetched data.
+        # Fetch all .env variables from GitHub Actions secrets with sensible fallbacks
         env:
           README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          GENERATE_TOP_LANGS: "1"
-          GENERATE_STREAK: "1"
+          GENERATE_TOP_LANGS: ${{ secrets.GENERATE_TOP_LANGS || '1' }}
+          GENERATE_STREAK: ${{ secrets.GENERATE_STREAK || '1' }}
+          GENERATE_ACTIVITY_GRAPH: ${{ secrets.GENERATE_ACTIVITY_GRAPH || '1' }}
         run: python .github/scripts/render_readme_cards.py
 
-      - name: Debug token presence
+      - name: Debug secret presence
         env:
           README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GENERATE_TOP_LANGS: ${{ secrets.GENERATE_TOP_LANGS }}
+          GENERATE_STREAK: ${{ secrets.GENERATE_STREAK }}
+          GENERATE_ACTIVITY_GRAPH: ${{ secrets.GENERATE_ACTIVITY_GRAPH }}
         run: |
           echo "README_STATS_TOKEN: ${README_STATS_TOKEN:+present}"
           echo "GITHUB_TOKEN: ${GITHUB_TOKEN:+present}"
+          echo "GENERATE_TOP_LANGS: ${GENERATE_TOP_LANGS:+present (custom secret set)}"
+          echo "GENERATE_STREAK: ${GENERATE_STREAK:+present (custom secret set)}"
+          echo "GENERATE_ACTIVITY_GRAPH: ${GENERATE_ACTIVITY_GRAPH:+present (custom secret set)}"
 
       - name: Commit cards
         run: |
@@ -46,6 +63,7 @@ jobs:
           git add profile/stats.svg
           if [ -f profile/top-langs.svg ]; then git add profile/top-langs.svg; fi
           if [ -f profile/streak.svg ]; then git add profile/streak.svg; fi
+          if [ -f profile/activity-graph.svg ]; then git add profile/activity-graph.svg; fi
 
           git commit -m "Update README cards" || echo "No changes to commit"
           git pull origin ${{ github.ref_name }} --rebase
