@@ -1,6 +1,6 @@
 # Suvam Paul
 
-I'm a Computer Science student at JIS College of Engineering (2023–2027), building backend systems, cloud infrastructure, and AI workflows.
+I building backend systems, cloud infrastructure, and AI workflows.
 
 I care about what happens after an API returns: whether a payment reaches the right state, a failed job can recover, and a decision can be traced back to its source.
 
