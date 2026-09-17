@@ -17,7 +17,7 @@ As a project mentor at **Apertre 3.0**, I reviewed pull requests, helped contrib
 
 ### Tools & direction
 
-TypeScript / JavaScript · Node.js / Express · React / Next.js · Python · PostgreSQL · AWS
+TypeScript / JavaScript · Node.js / Express · Python · PostgreSQL · AWS · Docker · Github Actions
 
 My next focus is reliable background jobs, Docker-based deployment, and reusable agent skills that make AI-assisted development easier to check and maintain.
 
