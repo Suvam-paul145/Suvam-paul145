@@ -6,10 +6,10 @@ I care about what happens after an API returns: whether a payment reaches the ri
 
 ### Built & building
 
-- **FixFlowAI** — a freelancing platform with state-machine-based escrow payments, audit trails, and AI-assisted skill verification. Built with Node.js, React, and AWS serverless services.
-- **Take U Forward** — led a team building a retail backend with Express, Prisma, and PostgreSQL, including request tracing, structured logging, graceful shutdown, and CI/CD deployment.
+- [FixFlowAI](https://github.com/FixFlow-AI) — a freelancing platform with state-machine-based escrow payments, audit trails, and AI-assisted skill verification. Built with Node.js, React, and AWS serverless services.
+- [Take U Forward](https://github.com/Subhratanu-Saha/take-you-forward-app) — led a team building a retail backend with Express, Prisma, and PostgreSQL, including request tracing, structured logging, graceful shutdown, and CI/CD deployment.
 - **Bunchhh** — working on finding useful moments in long videos and turning them into short clips.
-- **Stock research agent** — building a personal research tool around company filings and source-backed analysis, with trading decisions kept manual.
+- [Stock research agent](https://github.com/Suvam-paul145/Stock-market-agent) — building a personal research tool around company filings and source-backed analysis, with trading decisions kept manual.
 
 ### Working with people, too
 
