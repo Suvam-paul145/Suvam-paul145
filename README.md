@@ -6,18 +6,20 @@ I care about what happens after an API returns: whether a payment reaches the ri
 
 ### Built & building
 
-- [FixFlowAI](https://github.com/FixFlow-AI) — a freelancing platform with state-machine-based escrow payments, audit trails, and AI-assisted skill verification. Built with Node.js, React, and AWS serverless services.
-- [Take U Forward](https://github.com/Subhratanu-Saha/take-you-forward-app) — led a team building a retail backend with Express, Prisma, and PostgreSQL, including request tracing, structured logging, graceful shutdown, and CI/CD deployment.
+- [FixFlowAI](https://github.com/FixFlow-AI) — a freelancing platform with state-machine-based escrow payments, audit trails, and AI-assisted skill verification. Built with Node.js, React, and AWS.
+- [Take U Forward](https://github.com/Subhratanu-Saha/take-you-forward-app) — led a team building a retail backend with Express, Prisma, and PostgreSQL, including request tracing, structured logging, and deployment.
 - **Bunchhh** — working on finding useful moments in long videos and turning them into short clips.
-- [Stock research agent](https://github.com/Suvam-paul145/Stock-market-agent) — building a personal research tool around company filings and source-backed analysis, with trading decisions kept manual.
+- [Stock research agent](https://github.com/Suvam-paul145/Stock-market-agent) — building a personal research tool around company filings and source-backed analysis, with trading decisions kept meaningful.
 
 ### Working with people, too
 
-As a project mentor at **Apertre 3.0**, I reviewed pull requests, helped contributors find suitable issues, and guided them through Git and project decisions. I've also worked as a backend cloud engineer and project advisor.
+As a project mentor at **Apertre 3.0**, I reviewed pull requests, helped contributors find suitable issues, and guided them through Git and project decisions. I've also worked as a backend cloud engineer.
 
 ### Tools & direction
 
-TypeScript / JavaScript · Node.js / Express · Python · PostgreSQL · AWS · Docker · Github Actions
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=c,cpp,python,javascript,nodejs,express,typescript,mysql,mongodb,s3,postgres,prisma,git,linux,docker,vercel,render,aws,gcp,powershell,jira,vscode,claude,betterstack&theme=dark" />
+</p>
 
 My next focus is reliable background jobs, Docker-based deployment, and reusable agent skills that make AI-assisted development easier to check and maintain.
 
