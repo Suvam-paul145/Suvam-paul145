@@ -1,6 +1,6 @@
 ### Built & building
 
-- [FixFlowAI](https://github.com/FixFlow-AI) — a freelancing platform with state-machine-based escrow payments, audit trails, and AI-assisted skill verification. Built with Node.js, React, and AWS.
+- [SwasthaLink](https://github.com/Suvam-paul145/SwasthaLink) Transforming clinical jargon into plain language that patients actually understand, with bilingual output (English + Bengali), comprehension checks, and direct WhatsApp delivery.
 - [Take U Forward](https://github.com/Subhratanu-Saha/take-you-forward-app) — led a team building a retail backend with Express, Prisma, and PostgreSQL, including request tracing, structured logging, and deployment.
 - [Stock research agent](https://github.com/Suvam-paul145/Stock-market-agent) — building a personal research tool around company filings and source-backed analysis, with trading decisions kept meaningful.
 
